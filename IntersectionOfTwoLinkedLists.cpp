@@ -53,6 +53,6 @@ public:
         }
     }
         
-    return p1;
+    return ptr1;
 }
 };
