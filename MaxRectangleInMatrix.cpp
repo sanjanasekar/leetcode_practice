@@ -15,31 +15,42 @@ Return 6.
 
 Using my function of largestRectangleArea for this solution.
 ************************************************/
-
 class Solution {
 public:
     int maximalRectangle(vector<vector<char>>& matrix) {
         vector<int> row;
         int max_area;
-        for(vector<char>::iterator itr1 = matrix[0].begin(); itr1 != matrix[0].end(); ++itr1){
+        if(matrix.size() > 0){
+            
+            for(vector<char>::iterator itr1 = matrix[0].begin(); itr1 != matrix[0].end(); ++itr1){
               
                     row.push_back(((*itr1) - '0'));
-                    //cout << " row" << row.at((itr1 - matrix[0].begin())) << endl;
-                    max_area = largestRectangleArea(row);  
-        }
-        for(vector<vector<char> >:: iterator itr = matrix.begin() + 1; itr!= matrix.end(); ++itr){
-            for(vector<char>::iterator itr1 = (*itr).begin(); itr1 != (*itr).end(); ++itr1){
-              
+                    //cout << " row" << row.at((itr1 - matrix[0].begin())) << endl;     
+            }
+            max_area = largestRectangleArea(row); 
+            //cout << "max_area\t" << max_area << endl;
+            for(vector<vector<char> >:: iterator itr = matrix.begin() + 1; itr!= matrix.end(); ++itr){
+                for(vector<char>::iterator itr1 = (*itr).begin(); itr1 != (*itr).end(); ++itr1){
                    if((*itr1) == '1'){
                        row[((itr1) - (*itr).begin())] += ((*itr1) - '0');
                    }
-                int max_area_per_row = largestRectangleArea(row);  
-                if(max_area_per_row > max_area){
-                    max_area = max_area_per_row;
+                   else{
+                       row[((itr1) - (*itr).begin())] = 0;
+                   }
+                   //cout << " row" << row.at((itr1 - (*itr).begin())) << endl; 
                 }
+                int max_area_per_row = largestRectangleArea(row);  
+                    if(max_area_per_row > max_area){
+                        max_area = max_area_per_row;
+                        //cout << "max_area2\t" << max_area << endl;
+                    }
             }
+            return max_area;     
         }
-      return max_area;  
+        else{
+            return 0;
+        }
+         
     }
     int largestRectangleArea(vector<int>& heights) {
         stack<int> stack_index;
